@@ -1,68 +1,64 @@
 //-----------------------MEMORY PART-----------------------//
 
 //8BG memory
-const memory8GBButton = document.getElementById('8GB-memory-button');
-memory8GBButton.addEventListener('click', function(){
-    extraMemoryCost('8GBMemory');
-    //totalPrice('8GBMemory');
-    //grandTotal('8GBMemory');
+document.getElementById('8GB-memory-button').addEventListener('click', function(){
+    memoryTotalPrice('8GBMemory');
 })
 
 //16GB memory
-const memory16GBButton = document.getElementById('16GB-memory-button');
-memory16GBButton.addEventListener('click', function(){
-    extraMemoryCost('16GBMemory');
-    //totalPrice('16GBMemory');
-    //grandTotal('16GBMemory');
+document.getElementById('16GB-memory-button').addEventListener('click', function(){
+    memoryTotalPrice('16GBMemory');
 })
 
 //-----------------------STORAGE PART-----------------------//
 
 //256GB SSD storage
-const SSD256GBButton = document.getElementById('256GB-SSD-button');
-SSD256GBButton.addEventListener('click', function(){
-    SSDCost('256GBStorage');
-    //totalPrice('256GBStorage');
-    //grandTotal('256GBStorage');
+document.getElementById('256GB-SSD-button').addEventListener('click', function(){
+    SSDTotalPrice('256GBStorage');
 })
 
 //512GB SSD storage
-const SSD512GBButton = document.getElementById('512GB-SSD-button');
-SSD512GBButton.addEventListener('click', function(){
-    SSDCost('512GBStorage');
-    //totalPrice('512GBStorage');
-    //grandTotal('512GBStorage');
+document.getElementById('512GB-SSD-button').addEventListener('click', function(){
+    SSDTotalPrice('512GBStorage');
 })
 
 //1TB SSD storage
-const SSD1TBButton = document.getElementById('1TB-SSD-button');
-SSD1TBButton.addEventListener('click', function(){
-    SSDCost('1TBStorage');
-    //totalPrice('1TBStorage');
-    //grandTotal('1TBStorage');
+document.getElementById('1TB-SSD-button').addEventListener('click', function(){
+    SSDTotalPrice('1TBStorage');
 })
 
 //-----------------------DELIVERY PART-----------------------//
 
 //Free delivery
-const freeDeliveryButton = document.getElementById('free-delivery');
-freeDeliveryButton.addEventListener('click', function(){
-    deliveryCost('freeDelivery');
-    //totalPrice('freeDelivery');
-    //grandTotal('freeDelivery');
+document.getElementById('free-delivery').addEventListener('click', function(){
+    deliveryTotalCost('freeDelivery');
 })
 
 //Charged delivery
-const chargedDeliveryButton = document.getElementById('charged-delivery');
-chargedDeliveryButton.addEventListener('click', function(){
-    deliveryCost('chargedDelivery');
-    //totalPrice('chargedDelivery');
-    //grandTotal('chargedDelivery');
+document.getElementById('charged-delivery').addEventListener('click', function(){
+    deliveryTotalCost('chargedDelivery');
 })
 
 //-----------------------PROMO PART-----------------------//
 
+const promoButton = document.getElementById('promo-button').addEventListener('click',function(){
+    const getPromoInput = document.getElementById('promo-input');
+    const getPromoInputValue = getPromoInput.value.toLowerCase() ;
 
+    const getGrandTotalID = document.getElementById('grand-total');
+    const getGrandTotalText = getGrandTotalID.innerText;
+    const textToAmount = parseInt(getGrandTotalText);
+    if(getPromoInputValue == 'stevekaku')
+    {
+        const grandAmount = textToAmount -(textToAmount * 0.2);    
+        getGrandTotalID.innerText = grandAmount;
+        getPromoInput.value= '';
+        document.getElementById('promo-success').style.display = 'block';
+    }
+    else{
+        alert ("You don't have any PROMO code. Please try again later.");
+    }
+})
 
 //-----------------------ALL THE FUNCTIONS-----------------------//
 
@@ -71,12 +67,17 @@ function extraMemoryCost(type){
     const getMemoryID = document.getElementById('extra-memory-cost');
     const getMemoryText = getMemoryID.innerText;
     const textToAmount = parseInt(getMemoryText);
-    //Need to calculate value for 8GB & 16GB 
+    //Calculation for 8GB & 16GB 
     if(type == '8GBMemory'){
-        getMemoryID.innerText = textToAmount + 0;
+        getMemoryID.innerText = 0;
+        const memory8GBPrice = parseInt(getMemoryID.innerText);
+        return memory8GBPrice;
+        
     }
     else if(type == '16GBMemory'){
-        getMemoryID.innerText = textToAmount + 180;
+        getMemoryID.innerText = 180;
+        const memory16GBPrice = parseInt(getMemoryID.innerText);
+        return memory16GBPrice;
     }
 }
 
@@ -85,15 +86,21 @@ function SSDCost(type){
     const getSSDStorageID = document.getElementById('SSD-storage-cost');
     const getSSDStorageText = getSSDStorageID.innerText;
     const textToAmount = parseInt(getSSDStorageText);
-    //Need to calculate value for 256GB, 512GB & 1TB
+    //Calculation for 256GB, 512GB & 1TB
     if(type == '256GBStorage'){
-        getSSDStorageID.innerText = textToAmount + 0;
+        getSSDStorageID.innerText = 0;
+        const SSD256GBPrice = parseInt(getSSDStorageID.innerText);
+        return SSD256GBPrice;
     }
     else if(type == '512GBStorage'){
-        getSSDStorageID.innerText = textToAmount + 100;
+        getSSDStorageID.innerText = 100;
+        const SSD512GBPrice = parseInt(getSSDStorageID.innerText);
+        return SSD512GBPrice;
     }
     else if(type == '1TBStorage'){
-        getSSDStorageID.innerText = textToAmount + 180;
+        getSSDStorageID.innerText = 180;
+        const SSD1TBPrice = parseInt(getSSDStorageID.innerText);
+        return SSD1TBPrice;
     }
 }
 
@@ -101,31 +108,72 @@ function deliveryCost(type){
     const getDeliveryID = document.getElementById('delivery-charge');
     const getDeliveryText = getDeliveryID.innerText;
     const textToAmount = parseInt(getDeliveryText);
-    //Need to calculate value for Aug 25 & Aug 21 
+    //Calculation for Aug 25 & Aug 21 
     if(type == 'freeDelivery'){
-        getDeliveryID.innerText = textToAmount + 0;
+        getDeliveryID.innerText = 0;
+        const freeCost = parseInt(getDeliveryID.innerText);
+        return freeCost;
     }
     else if(type == 'chargedDelivery'){
-        getDeliveryID.innerText = textToAmount + 20;
+        getDeliveryID.innerText = 20;
+        const chargedCost = parseInt(getDeliveryID.innerText);
+        return chargedCost;
     }
 }
 
-function totalPrice(){
+function memoryTotalPrice(type1){
+    //Best Price Part 
+    const getBestPrice = document.getElementById('base-price');
+    const bestPriceAmount = parseInt(getBestPrice.innerText);
+    //SSD storage part
+    const getSSDStorageID = document.getElementById('SSD-storage-cost');
+    //Delivery cost part
+    const getDeliveryID = document.getElementById('delivery-charge');
     //Total price part
     const getTotalPriceID = document.getElementById('total-price');
-    const getPriceText = getTotalPriceID.innerText;
-    const textToAmount = parseInt(getPriceText);
-    //Need to calculate value for Memory (8GB & 16GB) + Storage (256GB, 512GB & 1TB) + Delivery (Free & Charge)
-    const totalAmount = textToAmount + 180;
+    //Total price calculation
+    const totalAmount = bestPriceAmount + extraMemoryCost(type1)+ parseInt(getSSDStorageID.innerText)+ parseInt(getDeliveryID.innerText) ;
     getTotalPriceID.innerText = totalAmount;
+    //Grand Total part
+    const getGrandTotalID = document.getElementById('grand-total');
+    //Grand total calculation
+    getGrandTotalID.innerText = totalAmount;
 }
 
-function grandTotal(){
-    //Total part
+function SSDTotalPrice(type1){
+    //Best Price Part 
+    const getBestPrice = document.getElementById('base-price');
+    const bestPriceAmount = parseInt(getBestPrice.innerText);
+    //Memory cost part
+    const getMemoryID = document.getElementById('extra-memory-cost');
+    //Delivery cost part
+    const getDeliveryID = document.getElementById('delivery-charge');
+    //Total price part
+    const getTotalPriceID = document.getElementById('total-price');
+    //Total price calculation
+    const totalAmount = bestPriceAmount + parseInt(getMemoryID.innerText) + SSDCost(type1) + parseInt(getDeliveryID.innerText);
+    getTotalPriceID.innerText = totalAmount;
+    //Grand total part
     const getGrandTotalID = document.getElementById('grand-total');
-    const getGrandTotalText = getGrandTotalID.innerText;
-    const textToAmount = parseInt(getGrandTotalText);
-    //Need to calculate value for Memory (8GB & 16GB) + Storage (256GB, 512GB & 1TB) + Delivery (Free & Charge)
-    const grandAmount = textToAmount + 180;
-    getGrandTotalID.innerText = grandAmount;
+    //Grand total calculation
+    getGrandTotalID.innerText = totalAmount;
+}
+
+function deliveryTotalCost(type1){
+    //Best Price Part 
+    const getBestPrice = document.getElementById('base-price');
+    const bestPriceAmount = parseInt(getBestPrice.innerText);
+    //Memory price part
+    const getMemoryID = document.getElementById('extra-memory-cost');
+    //SSD storage part
+    const getSSDStorageID = document.getElementById('SSD-storage-cost');
+    //Total price part
+    const getTotalPriceID = document.getElementById('total-price');
+    //Total price calculation
+    const totalAmount = bestPriceAmount +parseInt(getMemoryID.innerText) + parseInt(getSSDStorageID.innerText) + deliveryCost(type1);
+    getTotalPriceID.innerText = totalAmount;
+    //Grand total part
+    const getGrandTotalID = document.getElementById('grand-total');
+    //Grand total calculation
+    getGrandTotalID.innerText = totalAmount;
 }
